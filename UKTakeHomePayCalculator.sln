@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32811.315
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UKTakeHomePayCalculator.Core", "src/UKTakeHomePayCalculator.Core\UKTakeHomePayCalculator.Core.csproj", "{3C2CD2BB-E4FF-4270-AE73-75D570B332DC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UKTakeHomePayCalculator.Tests", "test/UKTakeHomePayCalculator.Tests\UKTakeHomePayCalculator.Tests.csproj", "{6CD52B70-639A-45BA-A01B-1B8EB9A2CCD0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3C2CD2BB-E4FF-4270-AE73-75D570B332DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C2CD2BB-E4FF-4270-AE73-75D570B332DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C2CD2BB-E4FF-4270-AE73-75D570B332DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C2CD2BB-E4FF-4270-AE73-75D570B332DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6CD52B70-639A-45BA-A01B-1B8EB9A2CCD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CD52B70-639A-45BA-A01B-1B8EB9A2CCD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CD52B70-639A-45BA-A01B-1B8EB9A2CCD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CD52B70-639A-45BA-A01B-1B8EB9A2CCD0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {375F016A-4C78-48DD-953D-BB0281BBC6FB}
+	EndGlobalSection
+EndGlobal
