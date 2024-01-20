@@ -20,10 +20,10 @@
         public static MonetaryValue Zero => new MonetaryValue(0.0m, MonetaryFrequency.Week);
 
         public static MonetaryValue PositiveInfinity
-            => new MonetaryValue() { _infinity = MonetaryValueInfinity.PositiveInfinity };
+            => new MonetaryValue(0.0m, MonetaryFrequency.Week) { _infinity = MonetaryValueInfinity.PositiveInfinity };
 
         public static MonetaryValue NegativeInfinity
-            => new MonetaryValue() { _infinity = MonetaryValueInfinity.NegativeInfinity };
+            => new MonetaryValue(0.0m, MonetaryFrequency.Week) { _infinity = MonetaryValueInfinity.NegativeInfinity };
 
         #region Constructors
 
@@ -64,7 +64,7 @@
                     return NegativeInfinity;
 
             if (value1._infinity == MonetaryValueInfinity.NegativeInfinity)
-                if (value2 < 0)
+                if (value2 > 0)
                     return value1;
                 else
                     return PositiveInfinity;
@@ -94,7 +94,7 @@
                     return NegativeInfinity;
 
             if (value1._infinity == MonetaryValueInfinity.NegativeInfinity)
-                if (value2 < 0)
+                if (value2 > 0)
                     return value1;
                 else
                     return PositiveInfinity;
@@ -189,6 +189,9 @@
 
         public MonetaryValue ConvertTo(MonetaryFrequency newFrequency)
         {
+            if (_infinity == MonetaryValueInfinity.PositiveInfinity || _infinity == MonetaryValueInfinity.NegativeInfinity)
+                return this;
+
             return new MonetaryValue(_value * (int)newFrequency / (int)_frequency, newFrequency);
         }
 
@@ -218,6 +221,12 @@
 
         public override string ToString()
         {
+            if (_infinity == MonetaryValueInfinity.PositiveInfinity)
+                return "+Infinity";
+
+            if (_infinity == MonetaryValueInfinity.NegativeInfinity)
+                return "-Infinity";
+
             return $"{Math.Round(_value, 2):n2}/{_frequency}";
         }
 
