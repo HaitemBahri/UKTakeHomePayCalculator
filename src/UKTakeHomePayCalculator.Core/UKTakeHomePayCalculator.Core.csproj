@@ -17,6 +17,7 @@
   <ItemGroup>
 	  <Folder Include="Earnings\" />
 	  <Folder Include="Deductions\" />
+	  <Folder Include="Helpers/" />
 	  <Folder Include="Reports\" />
 	  <Folder Include="Services\" />
   </ItemGroup>

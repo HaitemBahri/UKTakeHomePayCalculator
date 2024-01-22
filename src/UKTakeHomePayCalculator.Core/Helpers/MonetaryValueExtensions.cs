@@ -1,5 +1,7 @@
 ﻿
-namespace UKTakeHomePayCalculator.Core.Models;
+using UKTakeHomePayCalculator.Core.Models;
+
+namespace UKTakeHomePayCalculator.Core.Helpers;
 
 public static class MonetaryValueExtensions
     {

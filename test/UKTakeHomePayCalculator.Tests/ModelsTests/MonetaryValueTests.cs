@@ -1,8 +1,8 @@
-﻿using System.Security.AccessControl;
-using FluentAssertions;
+﻿using FluentAssertions;
+using UKTakeHomePayCalculator.Core.Helpers;
 using UKTakeHomePayCalculator.Core.Models;
 
-namespace UKTakeHomePayCalculator.Tests;
+namespace UKTakeHomePayCalculator.Tests.ModelsTests;
 
 public class MonetaryValueTests
 {
