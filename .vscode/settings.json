@@ -1,4 +1,0 @@
-{
-    "terminal.integrated.fontFamily": "MesloLGS NF",
-    "dotnet-test-explorer.testProjectPath": "**/*Tests.csproj" 
-}

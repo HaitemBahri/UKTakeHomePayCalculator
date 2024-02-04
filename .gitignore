@@ -12,6 +12,9 @@
 # Personal files
 repodocs/
 
+# JetBrain Rider config files
+.idea/
+
 # User-specific files
 *.rsuser
 *.suo
