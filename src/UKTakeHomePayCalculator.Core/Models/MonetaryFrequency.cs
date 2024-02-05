@@ -1,6 +1,6 @@
 ﻿namespace UKTakeHomePayCalculator.Core.Models
 {
-    public struct MonetaryFrequency
+    public readonly struct MonetaryFrequency
     {
         #region fields
         private readonly MonetaryFrequencyEnum _monetaryFrequencyEnum;
@@ -11,7 +11,7 @@
         public static MonetaryFrequency Week => new MonetaryFrequency(MonetaryFrequencyEnum.Week);
         public static MonetaryFrequency Weeks(int weekCount)
         {
-            if(weekCount < 1 && weekCount > 4)
+            if(weekCount is < 1 or > 4)
                 throw new ArgumentOutOfRangeException(nameof(weekCount), "_value should be between 1 and 4.");
 
             return new MonetaryFrequency(MonetaryFrequencyEnum.Week, weekCount);
@@ -19,7 +19,7 @@
         public static MonetaryFrequency Month => new MonetaryFrequency(MonetaryFrequencyEnum.Month);
         public static MonetaryFrequency Months(int monthCount)
         {
-            if (monthCount < 1 && monthCount > 12)
+            if (monthCount is < 1 or > 12)
                 throw new ArgumentOutOfRangeException(nameof(monthCount), "_value should be between 1 and 12.");
 
             return new MonetaryFrequency(MonetaryFrequencyEnum.Month, monthCount);
@@ -28,8 +28,8 @@
         #endregion
 
         #region Constructors
-        private MonetaryFrequency(MonetaryFrequencyEnum monetaryFrequencyEnum) : this(monetaryFrequencyEnum, 1) { }
-        private MonetaryFrequency(MonetaryFrequencyEnum monetaryFrequencyEnum, int count)
+
+        private MonetaryFrequency(MonetaryFrequencyEnum monetaryFrequencyEnum, int count = 1)
         {
             _monetaryFrequencyEnum = monetaryFrequencyEnum;
             _count = count;
@@ -46,14 +46,7 @@
         #region Methods
         public override string ToString()
         {
-            var returnString = String.Empty;
-
-            if (_count == 1)
-                returnString = _monetaryFrequencyEnum.ToString();
-            else
-            {
-                returnString = $"{_count} {_monetaryFrequencyEnum}s";
-            }
+            var returnString = _count == 1 ? _monetaryFrequencyEnum.ToString() : $"{_count} {_monetaryFrequencyEnum}s";
 
             return returnString;
         }
