@@ -12,6 +12,7 @@
         #region Fields/Properties
         private readonly decimal _value = 0.0m;
         private readonly MonetaryFrequency _frequency = MonetaryFrequency.Week;
+        public MonetaryFrequency Frequency => _frequency;
         private decimal BaseValue => Math.Round(_value / (int)_frequency, 8);
         private MonetaryValueInfinity _infinity = MonetaryValueInfinity.None;
         private const int COMPARISON_DIGITS = 2;
