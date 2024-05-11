@@ -30,7 +30,6 @@
     <Folder Include="DeductionsTests\" />
     <Folder Include="EarningsTests\" />
     <Folder Include="ServicesTests\" />
-    <Folder Include="ReportsTests\" />
   </ItemGroup>
 
 </Project>
