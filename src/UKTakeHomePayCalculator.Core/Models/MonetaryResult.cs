@@ -5,12 +5,7 @@ namespace UKTakeHomePayCalculator.Core.Models;
 
 public class MonetaryResult : IEnumerable<MonetaryResultItem>
 {
-    private readonly List<MonetaryResultItem> _items;
-
-    public MonetaryResult()
-    {
-        _items = new List<MonetaryResultItem>();
-    }
+    private readonly List<MonetaryResultItem> _items = new();
 
     public int Count => _items.Count;
 
@@ -52,5 +47,26 @@ public class MonetaryResult : IEnumerable<MonetaryResultItem>
         var stringResult = result.ToString().TrimEnd('\n');
 
         return stringResult;
+    }
+    
+    public static bool operator==(MonetaryResult value1, MonetaryResult value2)
+    {
+        return !value1._items.Except(value2._items).Any();
+    }
+    
+    public static bool operator!=(MonetaryResult value1, MonetaryResult value2)
+    {
+        return !(value1 == value2);
+    }
+
+    public override bool Equals(object? obj)
+    {
+        if (obj is null)
+            return false;
+        
+        if (obj is not MonetaryResult)
+            return false;
+        
+        return this == (MonetaryResult)obj;
     }
 }
