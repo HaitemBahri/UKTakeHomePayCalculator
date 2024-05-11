@@ -23,4 +23,26 @@ public class MonetaryResultItem
     {
         return $"Rule = {Rule}, Result = {Result}";
     }
+    
+    public static bool operator==(MonetaryResultItem value1, MonetaryResultItem value2)
+    {
+        return value1.Rule == value2.Rule &&
+               value1.Result == value2.Result;
+    }
+    
+    public static bool operator!=(MonetaryResultItem value1, MonetaryResultItem value2)
+    {
+        return !(value1 == value2);
+    }
+
+    public override bool Equals(object? obj)
+    {
+        if (obj is null)
+            return false;
+        
+        if (obj is not MonetaryResultItem)
+            return false;
+        
+        return this == (MonetaryResultItem)obj;
+    }
 }
