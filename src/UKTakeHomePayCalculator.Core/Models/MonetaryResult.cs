@@ -3,7 +3,7 @@ using System.Text;
 
 namespace UKTakeHomePayCalculator.Core.Models;
 
-public class MonetaryResult : IEnumerable<MonetaryResultItem>
+public class MonetaryResult : IEnumerable<MonetaryResultItem>, IComparable<MonetaryResult>
 {
     private readonly List<MonetaryResultItem> _items = new();
 
@@ -57,6 +57,14 @@ public class MonetaryResult : IEnumerable<MonetaryResultItem>
     public static bool operator!=(MonetaryResult value1, MonetaryResult value2)
     {
         return !(value1 == value2);
+    }
+
+    public int CompareTo(MonetaryResult? other)
+    {
+        if (this == other)
+            return 0;
+
+        return 1;
     }
 
     public override bool Equals(object? obj)
