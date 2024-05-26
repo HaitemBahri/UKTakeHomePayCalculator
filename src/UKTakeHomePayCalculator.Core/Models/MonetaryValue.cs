@@ -9,14 +9,12 @@
 
     public struct MonetaryValue : IComparable<MonetaryValue>
     {
-        #region Fields/Properties
         private readonly decimal _value = 0.0m;
         private readonly MonetaryFrequency _frequency = MonetaryFrequency.Week;
         public MonetaryFrequency Frequency => _frequency;
         private decimal BaseValue => Math.Round(_value / (int)_frequency, 8);
         private MonetaryValueInfinity _infinity = MonetaryValueInfinity.None;
         private const int COMPARISON_DIGITS = 2;
-        #endregion
 
         public static MonetaryValue Zero => new MonetaryValue(0.0m, MonetaryFrequency.Week);
 
@@ -25,18 +23,12 @@
 
         public static MonetaryValue NegativeInfinity
             => new MonetaryValue(0.0m, MonetaryFrequency.Week) { _infinity = MonetaryValueInfinity.NegativeInfinity };
-
-        #region Constructors
-
+        
         public MonetaryValue(decimal value, MonetaryFrequency frequency)
         {
             _value = value;
             _frequency = frequency;
         }
-
-        #endregion
-
-        #region Operators
 
         public static MonetaryValue operator +(MonetaryValue value1, MonetaryValue value2)
         {
@@ -111,11 +103,13 @@
             if (IsSameInfinity(value1, value2))
                 return false;
 
-            if (value1._infinity == MonetaryValueInfinity.NegativeInfinity)
+            if (value1._infinity == MonetaryValueInfinity.NegativeInfinity || 
+                value2._infinity == MonetaryValueInfinity.PositiveInfinity)
                 return true;
 
-            if (value2._infinity == MonetaryValueInfinity.PositiveInfinity)
-                return true;
+            if (value1._infinity == MonetaryValueInfinity.PositiveInfinity || 
+                value2._infinity == MonetaryValueInfinity.NegativeInfinity)
+                return false;
 
             return Math.Round(value1.BaseValue, COMPARISON_DIGITS) < Math.Round(value2.BaseValue, COMPARISON_DIGITS);
         }
@@ -125,11 +119,13 @@
             if (IsSameInfinity(value1, value2))
                 return false;
 
-            if (value1._infinity == MonetaryValueInfinity.PositiveInfinity)
+            if (value1._infinity == MonetaryValueInfinity.PositiveInfinity || 
+                value2._infinity == MonetaryValueInfinity.NegativeInfinity)
                 return true;
 
-            if (value2._infinity == MonetaryValueInfinity.NegativeInfinity)
-                return true;
+            if (value1._infinity == MonetaryValueInfinity.NegativeInfinity || 
+                value2._infinity == MonetaryValueInfinity.PositiveInfinity)
+                return false;
 
             return Math.Round(value1.BaseValue, COMPARISON_DIGITS) > Math.Round(value2.BaseValue, COMPARISON_DIGITS);
         }
@@ -153,10 +149,6 @@
         {
             return !IsEqualTo(value1, value2);
         }
-
-        #endregion
-
-        #region Methods
 
         private static bool IsSameInfinity(MonetaryValue value1, MonetaryValue value2)
         {
@@ -228,6 +220,9 @@
             if (_infinity == MonetaryValueInfinity.NegativeInfinity)
                 return "-Infinity";
 
+            if (_value == 0m)
+                return "0.00";
+
             return $"{Math.Round(_value, 2):n2}/{_frequency}";
         }
 
@@ -237,6 +232,5 @@
             else if (this > other) return 1;
             else return 0;
         }
-        #endregion
     }
 }

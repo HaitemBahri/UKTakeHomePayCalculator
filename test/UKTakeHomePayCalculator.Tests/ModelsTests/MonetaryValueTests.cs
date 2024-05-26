@@ -6,7 +6,6 @@ namespace UKTakeHomePayCalculator.Tests.ModelsTests;
 
 public class MonetaryValueTests
 {
-    #region Math
     public static TheoryData<MonetaryValue, MonetaryValue, MonetaryValue, string> ShouldAddTwoMonetaryValuesTheoryData => new()
     {
         {450m.Month(), 1200m.Month(), 1650m.Month(), "Positive + Positive"},
@@ -113,12 +112,7 @@ public class MonetaryValueTests
 
         func.Should().Throw<DivideByZeroException>();
     }
-
-
-    #endregion
-
-    #region Comparison 
-
+    
     public static TheoryData<MonetaryValue, MonetaryValue, string> ShouldOneValueBeGreaterThanOtherValueTheoryData => new()
     {
         {900m.Week(), 63m.Week(), "Positive - Different Values and Same Frequency"},
@@ -136,8 +130,14 @@ public class MonetaryValueTests
     [MemberData(nameof(ShouldOneValueBeGreaterThanOtherValueTheoryData))]
     public void ShouldOneValueBeGreaterThanOtherValue(MonetaryValue value1, MonetaryValue value2, string testDataName)
     {
-        //value1.Should().BeGreaterThan(value2, testDataName);
-        Assert.True(value1 > value2);
+        value1.Should().BeGreaterThan(value2);
+    }
+    
+    [Theory]
+    [MemberData(nameof(ShouldOneValueBeGreaterThanOtherValueTheoryData))]
+    public void ShouldOneValueNotBeGreaterThanOtherValue(MonetaryValue value1, MonetaryValue value2, string testDataName)
+    {
+        Assert.False(value2 > value1);
     }
 
     [Theory]
@@ -145,8 +145,7 @@ public class MonetaryValueTests
     [MemberData(nameof(ShouldTwoMonetaryValuesBeEqualTheoryData))]
     public void ShouldOneValueBeGreaterThanOrEqualOtherValue(MonetaryValue value1, MonetaryValue value2, string testDataName)
     {
-        //value1.Should().BeGreaterThanOrEqualTo(value2, testDataName);
-        Assert.True(value1 >= value2);
+        value1.Should().BeGreaterOrEqualTo(value2);
     }
 
     public static TheoryData<MonetaryValue, MonetaryValue, string> ShouldOneValueBeLessThanOtherValueTheoryData => new()
@@ -167,6 +166,13 @@ public class MonetaryValueTests
     public void ShouldOneValueBeLessThanOtherValue(MonetaryValue value1, MonetaryValue value2, string testDataName)
     {
         value1.Should().BeLessThan(value2, testDataName);
+    }
+    
+    [Theory]
+    [MemberData(nameof(ShouldOneValueBeLessThanOtherValueTheoryData))]
+    public void ShouldOneValueNotBeLessThanOtherValue(MonetaryValue value1, MonetaryValue value2, string testDataName)
+    {
+        Assert.False(value2 < value1);
     }
 
     [Theory]
@@ -213,10 +219,6 @@ public class MonetaryValueTests
         value1.Should().NotBe(value2, testDataName);
     }
 
-    #endregion
-
-    #region Others
-
     public static TheoryData<MonetaryValue, MonetaryFrequency, MonetaryValue, string> ShouldConvertToDifferentFrequencyTheoryData => new()
     {
         {61.887m.Week(), MonetaryFrequency.Month,  265.23m.Month(), "Week to Month"},
@@ -251,6 +253,8 @@ public class MonetaryValueTests
 
     public static TheoryData<MonetaryValue, string, string> ShouldReturnCorrectStringTheoryData => new()
     {
+        {MonetaryValue.Zero, "0.00", "Zero"},
+        {0.00m.Month(), "0.00", "Zero"},
         {55m.Month(), "55.00/Month", "Positive, Zero Decimal"},
         {-155.99m.Week(), "-155.99/Week", "Negative, Non Zero Decimal"},
         {19500m.Year(), "19,500.00/Year", "Decimal Separator"},
@@ -267,6 +271,4 @@ public class MonetaryValueTests
 
         actualResult.Should().Be(expectedResult, testDataName);
     }
-
-    #endregion
 }
