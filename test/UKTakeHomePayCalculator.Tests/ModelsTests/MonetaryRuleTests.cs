@@ -8,16 +8,20 @@ public class MonetaryRuleTests
 {
     public static TheoryData<IEnumerable<MonetaryRuleItem>, int, string> ShouldReturnCorrectStringTheoryData => new()
     {
-        {   new List<MonetaryRuleItem> ()
-            {   new MonetaryRuleItem(0m.Week(), 1200m.Year(), 0.10m),
-                new MonetaryRuleItem(3000m.Year(), 4500m.Year(), 0.02m),
-                new MonetaryRuleItem(60000m.Year(), MonetaryValue.PositiveInfinity, 0.01m)},
+        {   
+            new List<MonetaryRuleItem> ()
+            {   
+                new (0m.Week(), 0.10m),
+                new (60000m.Year(), 0.01m),
+                new (3000m.Year(), 0.02m),
+            },
 
         3,
 
-         "[From 0.00/Week - To 1,200.00/Year] %10.00\n" +
-         "[From 3,000.00/Year - To 4,500.00/Year] %2.00\n" +
-         "[From 60,000.00/Year - To +Infinity] %1.00" }
+        "From 0.00 @ %10.00\n" +
+            "From 3,000.00/Year @ %2.00\n" +
+            "From 60,000.00/Year @ %1.00" 
+        }
     };
 
     [Theory]

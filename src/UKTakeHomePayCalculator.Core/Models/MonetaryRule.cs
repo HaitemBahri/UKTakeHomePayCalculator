@@ -3,16 +3,35 @@ using System.Text;
 
 namespace UKTakeHomePayCalculator.Core.Models;
 
-public class MonetaryRule : IEnumerable<MonetaryRuleItem>
+public class MonetaryRule : IList<MonetaryRuleItem>
 {
-    private readonly List<MonetaryRuleItem> _items;
+    private readonly IList<MonetaryRuleItem> _items = new List<MonetaryRuleItem>();
+    public IList<MonetaryRuleItem> Items => _items.OrderBy(x => x.FromValue).ToList();
 
-    public MonetaryRule()
+    public override string ToString()
     {
-        _items = new List<MonetaryRuleItem>();
+        var result = new StringBuilder();
+    
+        foreach (var item in Items)
+        {
+            result.Append(item.ToString());
+            result.Append("\n");
+        }
+    
+        var stringResult = result.ToString().TrimEnd('\n');
+    
+        return stringResult;
+    }
+    
+    public IEnumerator<MonetaryRuleItem> GetEnumerator()
+    {
+        return Items.GetEnumerator();
     }
 
-    public int Count => _items.Count;
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
+    }
 
     public void Add(MonetaryRuleItem item)
     {
@@ -26,31 +45,39 @@ public class MonetaryRule : IEnumerable<MonetaryRuleItem>
 
     public bool Contains(MonetaryRuleItem item)
     {
-        return _items.Contains(item);
+        return Items.Contains(item);
     }
 
-    public IEnumerator<MonetaryRuleItem> GetEnumerator()
+    public void CopyTo(MonetaryRuleItem[] array, int arrayIndex)
     {
-        return _items.GetEnumerator();
+        Items.CopyTo(array, arrayIndex);
     }
 
-    IEnumerator IEnumerable.GetEnumerator()
+    public bool Remove(MonetaryRuleItem item)
     {
-        return GetEnumerator();
+        return _items.Remove(item);
     }
 
-    public override string ToString()
+    public int Count => Items.Count;
+    public bool IsReadOnly => Items.IsReadOnly;
+    public int IndexOf(MonetaryRuleItem item)
     {
-        var result = new StringBuilder();
+        return Items.IndexOf(item);
+    }
 
-        foreach (var item in _items)
-        {
-            result.Append(item.ToString());
-            result.Append("\n");
-        }
+    public void Insert(int index, MonetaryRuleItem item)
+    {
+        Items.Insert(index, item);
+    }
 
-        var stringResult = result.ToString().TrimEnd('\n');
+    public void RemoveAt(int index)
+    {
+        Items.RemoveAt(index);
+    }
 
-        return stringResult;
+    public MonetaryRuleItem this[int index]
+    {
+        get => Items[index];
+        set => Items[index] = value;
     }
 }
