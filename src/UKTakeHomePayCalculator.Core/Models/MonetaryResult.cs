@@ -3,11 +3,34 @@ using System.Text;
 
 namespace UKTakeHomePayCalculator.Core.Models;
 
-public class MonetaryResult : IEnumerable<MonetaryResultItem>, IComparable<MonetaryResult>
+public class MonetaryResult : IList<MonetaryResultItem>
 {
-    private readonly List<MonetaryResultItem> _items = new();
+    private readonly IList<MonetaryResultItem> _items = new List<MonetaryResultItem>();
 
-    public int Count => _items.Count;
+    public override string ToString()
+    {
+        var result = new StringBuilder();
+    
+        foreach (var item in _items)
+        {
+            result.Append(item.ToString());
+            result.Append("\n");
+        }
+    
+        var stringResult = result.ToString().TrimEnd('\n');
+    
+        return stringResult;
+    }
+    
+    public IEnumerator<MonetaryResultItem> GetEnumerator()
+    {
+        return _items.GetEnumerator();
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
+    }
 
     public void Add(MonetaryResultItem item)
     {
@@ -24,57 +47,37 @@ public class MonetaryResult : IEnumerable<MonetaryResultItem>, IComparable<Monet
         return _items.Contains(item);
     }
 
-    public IEnumerator<MonetaryResultItem> GetEnumerator()
+    public void CopyTo(MonetaryResultItem[] array, int arrayIndex)
     {
-        return _items.GetEnumerator();
+        _items.CopyTo(array, arrayIndex);
     }
 
-    IEnumerator IEnumerable.GetEnumerator()
+    public bool Remove(MonetaryResultItem item)
     {
-        return GetEnumerator();
+        return _items.Remove(item);
     }
 
-    public override string ToString()
+    public int Count => _items.Count;
+    public bool IsReadOnly => _items.IsReadOnly;
+    public int IndexOf(MonetaryResultItem item)
     {
-        var result = new StringBuilder();
+        return _items.IndexOf(item);
+    }
 
-        foreach (var item in _items)
-        {
-            result.Append(item.ToString());
-            result.Append("\n");
-        }
+    public void Insert(int index, MonetaryResultItem item)
+    {
+        _items.Insert(index, item);
+    }
 
-        var stringResult = result.ToString().TrimEnd('\n');
+    public void RemoveAt(int index)
+    {
+        _items.RemoveAt(index);
+    }
 
-        return stringResult;
+    public MonetaryResultItem this[int index]
+    {
+        get => _items[index];
+        set => _items[index] = value;
     }
     
-    public static bool operator==(MonetaryResult value1, MonetaryResult value2)
-    {
-        return !value1._items.Except(value2._items).Any();
-    }
-    
-    public static bool operator!=(MonetaryResult value1, MonetaryResult value2)
-    {
-        return !(value1 == value2);
-    }
-
-    public int CompareTo(MonetaryResult? other)
-    {
-        if (this == other)
-            return 0;
-
-        return 1;
-    }
-
-    public override bool Equals(object? obj)
-    {
-        if (obj is null)
-            return false;
-        
-        if (obj is not MonetaryResult)
-            return false;
-        
-        return this == (MonetaryResult)obj;
-    }
 }
